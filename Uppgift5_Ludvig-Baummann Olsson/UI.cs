@@ -28,10 +28,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public void PrintMessageLog()
         {
+            Print("----------------");
             foreach (var item in messageLog)
             {
-                Print("->"+item);
+                Print(item);
             }
+            
         }
         public void ClearMessageLog()
         {

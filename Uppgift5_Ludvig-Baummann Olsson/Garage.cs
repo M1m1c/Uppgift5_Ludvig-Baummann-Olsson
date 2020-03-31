@@ -21,17 +21,14 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         {
             return GetEnumerator();
         }
-        public void FillGarage()
-        {
-
-        }
+       
 
         //TODO Check so that registration number does not match any exisitng registration number.
         public bool AddVehicle(Vehicle vehicle)
         {
             bool retFlag = false;
             int index = Array.FindIndex(vehicles, q => q == null);
-            if (index < vehicles.Length)
+            if (index < vehicles.Length && index != -1) 
             {
                 retFlag = true;
                 vehicles[index] = vehicle;
@@ -51,12 +48,17 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             return retFlag;
         }
 
-        public string GetVehicleInfos<TVehicle>() where TVehicle : Vehicle
+        
+        public string GetVehicleInfos<TVehicle>() where TVehicle : Vehicle 
         {
             StringBuilder retString = new StringBuilder();
+            
+            var tempArray = Array.FindAll(vehicles, q => q is TVehicle);
 
-            foreach (TVehicle item in vehicles)
-                retString.Append(item + "\n");
+            foreach (var item in tempArray)
+            {
+                if (item!=null) retString.Append(item + "\n");
+            }
 
             return retString.ToString();
         }

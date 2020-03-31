@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Uppgift5_Ludvig_Baummann_Olsson
 {
+   
     class Vehicle
     {
         public Vehicle(string regN, string color, int wheels)
@@ -94,7 +95,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public override string ToString()
         {
-            return base.ToString() + $"Length: {Length}meters";
+            return base.ToString() + $"Length: {Length} meters";
         }
     }
 }
