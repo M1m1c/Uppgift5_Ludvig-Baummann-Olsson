@@ -22,7 +22,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public override string ToString()
         {
-            return ($"Lisence Plate: {RegistrationNumber}. Color: {Color}. Wheels: {Wheels}.");
+            return ($"{this.GetType().Name}-> Lisence Plate: {RegistrationNumber}| Color: {Color}| Wheels: {Wheels}|");
         }
     }
 
@@ -36,7 +36,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public override string ToString()
         {
-            return base.ToString() + $"Engines: {NumberOfEngines}";
+            return base.ToString() + $" Engines: {NumberOfEngines}|";
         }
     }
 
@@ -51,7 +51,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public override string ToString()
         {
-            return base.ToString() + $"Cylinder Volume: {CylinderVolume}";
+            return base.ToString() + $" Cylinder Volume: {CylinderVolume}|";
         }
     }
 
@@ -65,7 +65,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public override string ToString()
         {
-            return base.ToString() + $"Fuel Type: {FuelType}";
+            return base.ToString() + $" Fuel Type: {FuelType}|";
         }
     }
 
@@ -80,7 +80,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public override string ToString()
         {
-            return base.ToString() + $"Seats: {NumberOfSeats}";
+            return base.ToString() + $" Seats: {NumberOfSeats}|";
         }
     }
 
@@ -95,7 +95,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public override string ToString()
         {
-            return base.ToString() + $"Length: {Length} meters";
+            return base.ToString() + $" Length: {Length} meters|";
         }
     }
 }

@@ -53,6 +53,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 "Bus\n" +
                 "Boat\n");
             ui.AddToMessageLog(garageHandeler.GetVehicleInfos(ui.ReadLine()));
+            ui.AddToMessageLog(garageHandeler.GetVehicleAmounts());
         }
 
         private static void FillGarageWithDefault()

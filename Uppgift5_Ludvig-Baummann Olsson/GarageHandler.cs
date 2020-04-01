@@ -56,6 +56,11 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             return retString;
         }
 
+        public string GetVehicleAmounts()
+        {
+            return garage.CountVehicles();
+        }
+
         public void FillGarage()
         {
             garage.AddVehicle(new Car("ABC123", "Blue", 4, "Disel"));

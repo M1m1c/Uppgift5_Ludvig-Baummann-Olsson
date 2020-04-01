@@ -8,6 +8,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
     class Garage<T> : IEnumerable<T> where T : Vehicle
     {
         private Vehicle[] vehicles;
+
         public Garage(int capacity)
         {
             vehicles = new Vehicle[capacity];
@@ -46,8 +47,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 vehicles[Array.FindIndex(vehicles, q => q == temp)] = null;
             }
             return retFlag;
-        }
-
+        }       
         
         public string GetVehicleInfos<TVehicle>() where TVehicle : Vehicle 
         {
@@ -73,6 +73,61 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         public Vehicle FindVehicle(string input)
         {
             return Array.Find(vehicles, q => q.RegistrationNumber == input.ToUpper());
+        }
+
+        public string CountVehicles()
+        {        
+            VehicleCount[] vehicleCounts = new VehicleCount[] {
+                new VehicleCount("All",0),
+                new VehicleCount("Airplane",0),
+                new VehicleCount("Motorcycle",0),
+                new VehicleCount("Car",0),
+                new VehicleCount("Bus",0),
+                new VehicleCount("Boat",0)};
+            StringBuilder retString = new StringBuilder();
+            retString.Append("Vehicle Counts-> ");
+            foreach (var item in vehicleCounts)
+            {
+                item.Amount = GetVehicleAmountOfType(item.TypeName);
+                retString.Append($"{item.TypeName}: {item.Amount}| ");
+            }
+            return retString.ToString();
+        }
+        public int GetVehicleAmountOfType(string name)
+        {
+            int retInt=0;
+            switch (name)
+            {
+                case "Airplane":
+                    retInt = CountVehicleType<Airplane>();
+                    break;
+                case "Motorcycle":
+                    retInt = CountVehicleType<Motorcycle>();
+                    break;
+                case "Car":
+                    retInt = CountVehicleType<Car>();
+                    break;
+                case "Bus":
+                    retInt = CountVehicleType<Bus>();
+                    break;
+                case "Boat":
+                    retInt = CountVehicleType<Boat>();
+                    break;
+                case "All":
+                    retInt = CountVehicleType<Vehicle>();
+                    break;
+            }
+            return retInt;
+        }
+        private int CountVehicleType<TVehicle>() where TVehicle : Vehicle
+        {
+            int retInt = 0;
+            var tempArray = Array.FindAll(vehicles, q => q is TVehicle);
+            foreach (var item in tempArray)
+            {
+                if (item != null) retInt++;
+            }
+            return retInt;
         }
     }
 }
