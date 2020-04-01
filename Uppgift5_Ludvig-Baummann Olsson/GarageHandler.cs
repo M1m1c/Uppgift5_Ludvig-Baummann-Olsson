@@ -28,44 +28,78 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         public bool DoesRegistrationNumberExist(string input)
         {
             return garage.DoesRegistartionNumberExist(input);
+        } 
+
+        public string CountVehicles()
+        {
+            VehicleCount[] vehicleCounts = new VehicleCount[] {
+                new VehicleCount("All",0),
+                new VehicleCount("Airplane",0),
+                new VehicleCount("Motorcycle",0),
+                new VehicleCount("Car",0),
+                new VehicleCount("Bus",0),
+                new VehicleCount("Boat",0)};
+            StringBuilder retString = new StringBuilder();
+            retString.Append("Vehicle Counts-> ");
+            foreach (var item in vehicleCounts)
+            {
+                item.Amount = TypeSorter(item.TypeName).Count;
+                retString.Append($"{item.TypeName}: {item.Amount}| ");
+            }
+            return retString.ToString();
         }
-
-
+       
         public string GetVehicleInfos(string input)
         {
-            string retString="";
+            string retString = "";
+
+            List<Vehicle> vehicles = TypeSorter(input);
+            retString = BuildVehicleInfo(vehicles);
+
+            retString = string.IsNullOrEmpty(retString) ? "Could not find any vehicles mathcing that type" : retString;
+
+            return retString;
+        }
+        public string BuildVehicleInfo(List<Vehicle> vehicles)
+        {
+            StringBuilder retString = new StringBuilder();        
+
+            foreach (var item in vehicles)
+            {
+                if (item != null) retString.Append(item + "\n");
+            }
+
+            return retString.ToString();
+        }
+
+        public List<Vehicle> TypeSorter(string input)
+        {
+            var retList = new List<Vehicle>();
             switch (input.ToLower())
             {
                 case "airplane":
-                    retString = garage.GetVehicleInfos<Airplane>();
+                    retList = garage.GetVehiclesOfType<Airplane>();
                     break;
                 case "motorcycle":
-                    retString = garage.GetVehicleInfos<Motorcycle>();
+                    retList = garage.GetVehiclesOfType<Motorcycle>();
                     break;
                 case "car":
-                    retString = garage.GetVehicleInfos<Car>();
+                    retList = garage.GetVehiclesOfType<Car>();
                     break;
                 case "bus":
-                    retString = garage.GetVehicleInfos<Bus>();
+                    retList = garage.GetVehiclesOfType<Bus>();
                     break;
                 case "boat":
-                    retString = garage.GetVehicleInfos<Boat>();
+                    retList = garage.GetVehiclesOfType<Boat>();
                     break;
                 case "all":
-                    retString = garage.GetVehicleInfos<Vehicle>();
+                    retList = garage.GetVehiclesOfType<Vehicle>();
                     break;
             }
-
-            retString = string.IsNullOrEmpty(retString) ? "Could not find any vehicles mathcing that type" : retString;
-            
-            return retString;
+            return retList;
         }
 
-        public string GetVehicleAmounts()
-        {
-            return garage.CountVehicles();
-        }
-
+        
         public void FillGarage()
         {
             garage.AddVehicle(new Car("ABC123", "Blue", 4, "Disel"));

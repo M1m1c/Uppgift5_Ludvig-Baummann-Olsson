@@ -62,30 +62,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
                     string input = ui.ReadLine();
 
-                    Vehicle vehicle = new Vehicle("0000", "0000", 0);
-                    switch (input.ToLower())
-                    {
-                        case "airplane":
-                            vehicle = new Airplane(
-                                CreateRegistration().ToUpper(),
-                                SetString("Please enter a color:"),
-                                ParseANumber("Please enter how many wheels the vehicle has:"),
-                                ParseANumber("Please enter how many engines the plane has:"));
-                            break;
-                        case "motorcycle":
-                            //TODO
-                            break;
-                        case "car":
-                            //TODO
-                            break;
-                        case "bus":
-                            //TODO
-                            break;
-                        case "boat":
-                            //TODO
-                            break;
-                    }
-
+                    Vehicle vehicle = CreateNewVehicle(input);
 
                     if (garageHandeler.AddVehicle(vehicle))
                     {
@@ -107,6 +84,34 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
           
 
         }
+        static public Vehicle CreateNewVehicle(string input)
+        {
+            var retValue = new Vehicle("0", "0", 0);
+            switch (input.ToLower())
+            {
+                case "airplane":
+                    retValue = new Airplane(
+                        CreateRegistration().ToUpper(),
+                        SetString("Please enter a color:"),
+                        ParseANumber("Please enter how many wheels the vehicle has:"),
+                        ParseANumber("Please enter how many engines the plane has:"));
+                    break;
+                case "motorcycle":
+                    //TODO
+                    break;
+                case "car":
+                    //TODO
+                    break;
+                case "bus":
+                    //TODO
+                    break;
+                case "boat":
+                    //TODO
+                    break;
+            }
+            return retValue;
+        }
+
 
         private static int ParseANumber(string message)
         {
@@ -158,7 +163,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
               "Bus\n" +
               "Boat\n");
                 ui.AddToMessageLog(garageHandeler.GetVehicleInfos(ui.ReadLine()));
-                ui.AddToMessageLog(garageHandeler.GetVehicleAmounts());
+                ui.AddToMessageLog(garageHandeler.CountVehicles());
             }
             else
             {
