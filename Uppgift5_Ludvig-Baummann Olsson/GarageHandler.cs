@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Uppgift5_Ludvig_Baummann_Olsson
 {
@@ -27,8 +28,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public bool DoesRegistrationNumberExist(string input)
         {
-            return garage.DoesRegistartionNumberExist(input);
+            return garage.DoesRegistrationNumberExist(input);
         } 
+        public Vehicle FindVehicle(string input)
+        {
+            return garage.FindVehicle(input);
+        }
 
         public string CountVehicles()
         {
@@ -39,6 +44,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 new VehicleCount("Car",0),
                 new VehicleCount("Bus",0),
                 new VehicleCount("Boat",0)};
+
             StringBuilder retString = new StringBuilder();
             retString.Append("Vehicle Counts-> ");
             foreach (var item in vehicleCounts)
@@ -60,13 +66,16 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
             return retString;
         }
+
         public string BuildVehicleInfo(List<Vehicle> vehicles)
         {
-            StringBuilder retString = new StringBuilder();        
+            StringBuilder retString = new StringBuilder();
 
-            foreach (var item in vehicles)
+            foreach (var item in from item in vehicles
+                                 where item != null
+                                 select item)
             {
-                if (item != null) retString.Append(item + "\n");
+                retString.Append(item + "\n");
             }
 
             return retString.ToString();
@@ -98,15 +107,10 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             }
             return retList;
         }
-
-        
+     
         public void FillGarage()
         {
-            garage.AddVehicle(new Car("ABC123", "Blue", 4, "Disel"));
-            garage.AddVehicle(new Airplane("DEF456", "Blue", 6, 4));
-            garage.AddVehicle(new Boat("GHJ789", "Blue", 0, 8.5));
-            garage.AddVehicle(new Bus("KLM321", "Blue", 6, 20));
+            garage.FillGarage();
         }
-
     }
 }

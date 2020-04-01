@@ -16,7 +16,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public IEnumerator<T> GetEnumerator()
         {
-            return this.GetEnumerator();
+            return vehicles.GetEnumerator() as IEnumerator<T>;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -39,7 +39,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         public bool RemoveVehicle(string input)
         {
             bool retFlag = false;
-            Vehicle temp = FindVehicle(input);
+            Vehicle temp = FindVehicle(input.ToUpper());
             if (temp != null)
             {
                 retFlag = true;
@@ -49,7 +49,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         }       
         
        
-        public bool DoesRegistartionNumberExist(string input)
+        public bool DoesRegistrationNumberExist(string input)
         {
            
             Vehicle temp = FindVehicle(input.ToUpper());
@@ -82,6 +82,33 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             }
 
             return retlist;
+        }
+
+        public void FillGarage()
+        {
+            var temp1 = new Car("ABC123", "Blue", 4, "Disel");
+            if (!DoesRegistrationNumberExist(temp1.RegistrationNumber))
+            {
+                AddVehicle(temp1);
+            }
+
+            var temp2 = new Airplane("DEF456", "Blue", 6, 4);
+            if (!DoesRegistrationNumberExist(temp2.RegistrationNumber))
+            {
+                AddVehicle(temp2);
+            }
+
+            var temp3 = new Boat("GHJ789", "Blue", 0, 8.5);
+            if (!DoesRegistrationNumberExist(temp3.RegistrationNumber))
+            {
+                AddVehicle(temp3);
+            }
+
+            var temp4 = new Bus("KLM321", "Blue", 6, 20);
+            if (!DoesRegistrationNumberExist(temp4.RegistrationNumber))
+            {
+                AddVehicle(temp4);
+            }
         }
     }
 }

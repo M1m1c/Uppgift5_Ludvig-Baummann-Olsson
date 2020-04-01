@@ -17,7 +17,9 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                     "1. to create a garage\n" +
                     "2. to add default vehicles to garage\n" +
                     "3. to print vehicles in garage\n" +
-                    "4. to add a new vehicle to the garage\n");
+                    "4. to add a new vehicle to the garage\n" +
+                    "5. to remove a vehicle from the garage\n" +
+                    "6. to search for a vehicle using its registration number\n");
                 ui.PrintMessageLog();
                 ui.ClearMessageLog();
                 string input = ui.ReadLine();
@@ -39,12 +41,76 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                     case '4':
                         AddVehicle();
                         break;
+                    case '5':
+                        RemoveVehicle();
+                        break;
+                    case '6':
+                        SearchForVehicle();
+                        break;
                     default:
                         ui.Print("Please enter a valid selection");
                         break;
                 }
 
             }
+        }
+
+        private static void SearchForVehicle()
+        {
+            if (garageHandeler.HasGarage())
+            {
+                string tempString = "";
+                while (true)
+                {
+                    ui.Print("Write the registration number of the vehicle you want to see");
+                    string input = ui.ReadLine();
+                    char selection = input.Length > 0 ? input[0] : ' ';
+                    if (selection == '0')
+                    {
+                        break;
+                    }
+                    Vehicle tempVehicle = garageHandeler.FindVehicle(input.ToUpper());
+                    tempString = tempVehicle != null ? tempVehicle.ToString() : "";
+                    if (!string.IsNullOrEmpty(tempString))
+                    {
+                        ui.AddToMessageLog(tempString);
+                        break;
+                    }
+                    ui.Print("Could not find a vehicle with that registration number");
+                }
+            }
+            else
+            {
+                ui.AddToMessageLog("Create a garage before searching");
+            }        
+        }
+
+        private static void RemoveVehicle()
+        {
+            if (garageHandeler.HasGarage())
+            {
+                while (true)
+                {
+
+                    ui.Print("type the registration number of the vehicle you wish to remove");
+                    string input = ui.ReadLine();
+                    char selection = input.Length > 0 ? input[0] : ' ';
+                    if (selection == '0')
+                    {
+                        break;
+                    }
+                    else if (garageHandeler.RemoveVehicle(input))
+                    {
+                        ui.AddToMessageLog("Vehicle was removed successfully");
+                        break;
+                    }
+                    ui.Print("Could not find a vehicle with that number in the garage");
+                }
+            }
+            else
+            {
+                ui.AddToMessageLog("Create a garage before removing vehicles from it");
+            }            
         }
 
         private static void AddVehicle()
@@ -69,21 +135,14 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                         ui.AddToMessageLog("Vehicle added to garage successfully");
                         break;
                     }
-                    //Determine type
-                    //enter registration number
-                    //enter color
-                    //enter wheels
-                    //enter any extra variables
                 }
             }
             else
             {
                 ui.AddToMessageLog("Create a garage before adding vehicles to it");
             }
-            
-          
-
         }
+
         static public Vehicle CreateNewVehicle(string input)
         {
             var retValue = new Vehicle("0", "0", 0);
@@ -97,16 +156,32 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                         ParseANumber("Please enter how many engines the plane has:"));
                     break;
                 case "motorcycle":
-                    //TODO
+                    retValue = new Motorcycle(
+                       CreateRegistration().ToUpper(),
+                       SetString("Please enter a color:"),
+                       ParseANumber("Please enter how many wheels the vehicle has:"),
+                       ParseANumber("Please enter the cylidner volume of the motocycle:"));
                     break;
                 case "car":
-                    //TODO
+                    retValue = new Car(
+                    CreateRegistration().ToUpper(),
+                    SetString("Please enter a color:"),
+                    ParseANumber("Please enter how many wheels the vehicle has:"),
+                    SetString("Please enter what type of fuel the car uses:"));
                     break;
                 case "bus":
-                    //TODO
+                    retValue = new Bus(
+                    CreateRegistration().ToUpper(),
+                    SetString("Please enter a color:"),
+                    ParseANumber("Please enter how many wheels the vehicle has:"),
+                    ParseANumber("Please enter how many seats the bus has:"));
                     break;
                 case "boat":
-                    //TODO
+                    retValue = new Bus(
+                    CreateRegistration().ToUpper(),
+                    SetString("Please enter a color:"),
+                    ParseANumber("Please enter how many wheels the vehicle has:"),
+                    ParseANumber("Please enter how long the boat is:"));
                     break;
             }
             return retValue;
