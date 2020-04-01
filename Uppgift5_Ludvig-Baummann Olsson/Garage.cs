@@ -65,14 +65,25 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public bool DoesRegistartionNumberExist(string input)
         {
-            Vehicle temp = FindVehicle(input);
+           
+            Vehicle temp = FindVehicle(input.ToUpper());
 
-            return temp == null ? true : false;
+            return temp != null ? true : false;     
         }
 
         public Vehicle FindVehicle(string input)
         {
-            return Array.Find(vehicles, q => q.RegistrationNumber == input.ToUpper());
+            Vehicle temp = null;
+            foreach (var item in vehicles)
+            {
+                if (item != null && item.RegistrationNumber==input)
+                {
+                    temp = item;
+                }
+            }
+
+            //temp = Array.Find(vehicles, q => q.RegistrationNumber == input.ToUpper());
+            return temp;
         }
 
         public string CountVehicles()

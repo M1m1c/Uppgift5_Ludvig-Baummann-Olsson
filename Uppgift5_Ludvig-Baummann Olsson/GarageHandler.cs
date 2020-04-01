@@ -15,7 +15,6 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         {
             return garage != null ? true : false;
         }
-
         public bool AddVehicle(Vehicle vehicle)
         {
             return garage.AddVehicle(vehicle);
@@ -25,6 +24,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         {        
             return garage.RemoveVehicle(input);
         }
+
+        public bool DoesRegistrationNumberExist(string input)
+        {
+            return garage.DoesRegistartionNumberExist(input);
+        }
+
 
         public string GetVehicleInfos(string input)
         {
