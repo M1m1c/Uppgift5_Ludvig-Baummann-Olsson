@@ -17,22 +17,28 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             return garage != null ? true : false;
         }
         public bool AddVehicle(Vehicle vehicle)
-        {
-            return garage.AddVehicle(vehicle);
+        {         
+            return DoesRegistrationNumberExist(vehicle.RegistrationNumber) ? false : garage.AddVehicle(vehicle);
         }
 
         public bool RemoveVehicle(string input)
-        {        
-            return garage.RemoveVehicle(input);
+        {
+            var temp = FindVehicle(input);
+            
+            return garage.RemoveVehicle(temp != null ? temp.RegistrationNumber : "") ;
         }
 
         public bool DoesRegistrationNumberExist(string input)
-        {
-            return garage.DoesRegistrationNumberExist(input);
+        {        
+            Vehicle temp = FindVehicle(input);
+            return temp != null ? true : false;  
         } 
+
         public Vehicle FindVehicle(string input)
         {
-            return garage.FindVehicle(input);
+            var temp = from v in garage where v.RegistrationNumber == input.ToUpper() select v;
+            var g = temp.ToList();           
+            return g.Count > 0 ? g.FirstOrDefault() : null;
         }
 
         public string CountVehicles()
@@ -60,7 +66,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             string retString = "";
 
             List<Vehicle> vehicles = TypeSorter(input);
-            retString = BuildVehicleInfo(vehicles);
+
+            if (vehicles != null)
+            {
+                retString = BuildVehicleInfo(vehicles);
+            }
+            
 
             retString = string.IsNullOrEmpty(retString) ? "Could not find any vehicles mathcing that type" : retString;
 
@@ -87,30 +98,33 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             switch (input.ToLower())
             {
                 case "airplane":
-                    retList = garage.GetVehiclesOfType<Airplane>();
+                    retList = garage.Where( v => v is Airplane).ToList();
                     break;
                 case "motorcycle":
-                    retList = garage.GetVehiclesOfType<Motorcycle>();
+                    retList = garage.Where(v => v is Motorcycle).ToList();
                     break;
                 case "car":
-                    retList = garage.GetVehiclesOfType<Car>();
+                    retList = garage.Where(v => v is Car).ToList();
                     break;
                 case "bus":
-                    retList = garage.GetVehiclesOfType<Bus>();
+                    retList = garage.Where(v => v is Bus).ToList();
                     break;
                 case "boat":
-                    retList = garage.GetVehiclesOfType<Boat>();
+                    retList = garage.Where(v => v is Boat).ToList();
                     break;
                 case "all":
-                    retList = garage.GetVehiclesOfType<Vehicle>();
+                    retList = garage.Where( v => v is Vehicle).ToList();
                     break;
             }
             return retList;
         }
      
         public void FillGarage()
-        {
-            garage.FillGarage();
+        {         
+            AddVehicle(new Car("ABC123", "Blue", 4, "Disel"));
+            AddVehicle(new Airplane("DEF456", "Blue", 6, 4));
+            AddVehicle(new Boat("GHJ789", "Blue", 0, 8.5));
+            AddVehicle(new Bus("KLM321", "Blue", 6, 20));        
         }
     }
 }
