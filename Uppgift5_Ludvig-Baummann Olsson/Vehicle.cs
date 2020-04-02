@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Uppgift5_Ludvig_Baummann_Olsson
 {
-   
+
     class Vehicle
     {
         public Vehicle(string regN, string color, int wheels)
@@ -28,7 +28,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
     class Airplane : Vehicle
     {
-        public Airplane(string regN,string color,int wheels,int numEngines):base(regN,color,wheels)
+        public Airplane(string regN, string color, int wheels, int numEngines) : base(regN, color, wheels)
         {
             NumberOfEngines = numEngines;
         }

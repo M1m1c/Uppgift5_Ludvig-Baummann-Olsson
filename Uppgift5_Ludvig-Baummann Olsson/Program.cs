@@ -23,124 +23,110 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 ui.PrintMessageLog();
                 ui.ClearMessageLog();
                 string input = ui.ReadLine();
-                char selection = input.Length > 0 ? input[0] : ' ';
-                switch (selection)
-                {
-                    case '0':
-                        Environment.Exit(0);
-                        break;
-                    case '1':
-                        CreateGarage();
-                        break;
-                    case '2':
-                        FillGarageWithDefault();
-                        break;
-                    case '3':
-                        PrintVehiclesInGarage();
-                        break;
-                    case '4':
-                        AddVehicle();
-                        break;
-                    case '5':
-                        RemoveVehicle();
-                        break;
-                    case '6':
-                        SearchForVehicle();
-                        break;
-                    default:
-                        ui.Print("Please enter a valid selection");
-                        break;
-                }
+                char selection = input.Length > 0 && input.Length < 2 ? input[0] : ' ';
 
+                if (selection == '0') { Environment.Exit(0); }
+
+                if (selection == '1') { CreateGarage(); }
+
+                if (garageHandeler.HasGarage() == true)
+                {
+                    switch (selection)
+                    {
+                        case '2':
+                            FillGarageWithDefault();
+                            break;
+                        case '3':
+                            PrintVehiclesInGarage();
+                            break;
+                        case '4':
+                            AddVehicle();
+                            break;
+                        case '5':
+                            RemoveVehicle();
+                            break;
+                        case '6':
+                            SearchForVehicle();
+                            break;
+                    }
+                }
+                else
+                {
+                    ui.AddToMessageLog("Create a garage first!");
+                }
             }
         }
 
         private static void SearchForVehicle()
         {
-            if (garageHandeler.HasGarage())
+            string tempString = "";
+            while (true)
             {
-                string tempString = "";
-                while (true)
+                ui.Print("Write the registration number of the vehicle you want to see");
+                string input = ui.ReadLine();
+                char selection = input.Length > 0 ? input[0] : ' ';
+                if (selection == '0')
                 {
-                    ui.Print("Write the registration number of the vehicle you want to see");
-                    string input = ui.ReadLine();
-                    char selection = input.Length > 0 ? input[0] : ' ';
-                    if (selection == '0')
-                    {
-                        break;
-                    }
-                    Vehicle tempVehicle = garageHandeler.FindVehicle(input.ToUpper());
-                    tempString = tempVehicle != null ? tempVehicle.ToString() : "";
-                    if (!string.IsNullOrEmpty(tempString))
-                    {
-                        ui.AddToMessageLog(tempString);
-                        break;
-                    }
-                    ui.Print("Could not find a vehicle with that registration number");
+                    break;
                 }
+                Vehicle tempVehicle = garageHandeler.FindVehicle(input.ToUpper());
+                tempString = tempVehicle != null ? tempVehicle.ToString() : "";
+                if (!string.IsNullOrEmpty(tempString))
+                {
+                    ui.AddToMessageLog(tempString);
+                    break;
+                }
+                ui.Print("Could not find a vehicle with that registration number");
             }
-            else
-            {
-                ui.AddToMessageLog("Create a garage before searching");
-            }        
+
         }
 
         private static void RemoveVehicle()
         {
-            if (garageHandeler.HasGarage())
-            {
-                while (true)
-                {
 
-                    ui.Print("type the registration number of the vehicle you wish to remove");
-                    string input = ui.ReadLine();
-                    char selection = input.Length > 0 ? input[0] : ' ';
-                    if (selection == '0')
-                    {
-                        break;
-                    }
-                    else if (garageHandeler.RemoveVehicle(input))
-                    {
-                        ui.AddToMessageLog("Vehicle was removed successfully");
-                        break;
-                    }
-                    ui.Print("Could not find a vehicle with that number in the garage");
-                }
-            }
-            else
+            while (true)
             {
-                ui.AddToMessageLog("Create a garage before removing vehicles from it");
-            }            
+
+                ui.Print("type the registration number of the vehicle you wish to remove. type 0 to exit.");
+                string input = ui.ReadLine();
+                char selection = input.Length > 0 && input.Length < 2 ? input[0] : ' ';
+                if (selection == '0')
+                {
+                    break;
+                }
+                else if (garageHandeler.RemoveVehicle(input))
+                {
+                    ui.AddToMessageLog("Vehicle was removed successfully");
+                    break;
+                }
+                ui.Print("Could not find a vehicle with that number in the garage");
+            }
+
         }
 
         private static void AddVehicle()
         {
-            if (garageHandeler.HasGarage())
+
+            while (true)
             {
-                while (true)
+                ui.Print("Enter one of the following to create a vehicle of that type:\n" +
+                            "Airplane\n" +
+                            "Motorcycle\n" +
+                            "Car\n" +
+                            "Bus\n" +
+                            "Boat\n");
+
+                string input = ui.ReadLine();
+
+                Vehicle vehicle = CreateNewVehicle(input);
+
+                if (garageHandeler.AddVehicle(vehicle))
                 {
-                    ui.Print("Enter one of the following to create a vehicle of that type:\n" +
-                             "Airplane\n" +
-                             "Motorcycle\n" +
-                             "Car\n" +
-                             "Bus\n" +
-                             "Boat\n");
-
-                    string input = ui.ReadLine();
-
-                    Vehicle vehicle = CreateNewVehicle(input);
-
-                    if (garageHandeler.AddVehicle(vehicle))
-                    {
-                        ui.AddToMessageLog("Vehicle added to garage successfully");
-                        break;
-                    }
+                    ui.AddToMessageLog("Vehicle added to garage successfully");
+                    break;
                 }
             }
-            else
-            {
-                ui.AddToMessageLog("Create a garage before adding vehicles to it");
-            }
+
         }
 
         static public Vehicle CreateNewVehicle(string input)
@@ -194,7 +180,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             while (true)
             {
                 string input = SetString(message);
-                if (int.TryParse(input,out retInt))
+                if (int.TryParse(input, out retInt))
                 {
                     break;
                 }
@@ -223,40 +209,30 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 }
                 ui.Print("Registration number already exists in garage, each registration number must be unique");
             }
-            return retString; 
+            return retString;
         }
 
         private static void PrintVehiclesInGarage()
         {
-            if (garageHandeler.HasGarage())
-            {
-                ui.Print("Enter one of the following commands to see vehicles of that type:\n" +
-              "All\n" +
-              "Airplane\n" +
-              "Motorcycle\n" +
-              "Car\n" +
-              "Bus\n" +
-              "Boat\n");
-                ui.AddToMessageLog(garageHandeler.GetVehicleInfos(ui.ReadLine()));
-                ui.AddToMessageLog(garageHandeler.CountVehicles());
-            }
-            else
-            {
-                ui.AddToMessageLog("Create a garage first");
-            }    
+
+            ui.Print("Enter one of the following commands to see vehicles of that type:\n" +
+          "All\n" +
+          "Airplane\n" +
+          "Motorcycle\n" +
+          "Car\n" +
+          "Bus\n" +
+          "Boat\n");
+            ui.AddToMessageLog(garageHandeler.GetVehicleInfos(ui.ReadLine()));
+            ui.AddToMessageLog(garageHandeler.CountVehicles());
+
         }
 
         private static void FillGarageWithDefault()
         {
-            if (garageHandeler.HasGarage())
-            {
-                garageHandeler.FillGarage();
-                ui.AddToMessageLog("Added some default vehicles to the garage");
-            }
-            else
-            {
-                ui.AddToMessageLog("Create a garage before adding vehicles to it");
-            }
+
+            garageHandeler.FillGarage();
+            ui.AddToMessageLog("Added some default vehicles to the garage");
+
         }
 
         private static void CreateGarage()
@@ -265,7 +241,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             {
                 int capacity;
                 ui.Print("Enter a number to determine the capacity of the garage");
-                if (int.TryParse(ui.ReadLine(), out capacity) && capacity != 0) 
+                if (int.TryParse(ui.ReadLine(), out capacity) && capacity != 0)
                 {
                     garageHandeler.CreateGarage(capacity);
                     ui.AddToMessageLog($"A garage with a capcity for {capacity} vehicles has been created");

@@ -12,10 +12,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         {
             garage = new Garage<Vehicle>(capacity);
         }
+
         public bool HasGarage()
         {
             return garage != null ? true : false;
         }
+
         public bool AddVehicle(Vehicle vehicle)
         {         
             return DoesRegistrationNumberExist(vehicle.RegistrationNumber) ? false : garage.AddVehicle(vehicle);
@@ -70,8 +72,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             if (vehicles != null)
             {
                 retString = BuildVehicleInfo(vehicles);
-            }
-            
+            }       
 
             retString = string.IsNullOrEmpty(retString) ? "Could not find any vehicles mathcing that type" : retString;
 

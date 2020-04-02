@@ -20,19 +20,19 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             foreach (T item in tempArray)
             {
                 yield return item;
-            }       
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
-       
+
         public bool AddVehicle(T vehicle)
         {
             bool retFlag = false;
             int index = Array.FindIndex(vehicles, q => q == null);
-            if (index < vehicles.Length && index != -1) 
+            if (index < vehicles.Length && index != -1)
             {
                 retFlag = true;
                 vehicles[index] = vehicle;
@@ -52,8 +52,8 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                     retFlag = true;
                     temp = null;
                 }
-            }         
+            }
             return retFlag;
-        }       
+        }
     }
 }

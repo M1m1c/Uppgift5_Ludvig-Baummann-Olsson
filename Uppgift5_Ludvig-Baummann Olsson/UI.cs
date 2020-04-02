@@ -33,13 +33,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             {
                 Print(item);
             }
-            
         }
         public void ClearMessageLog()
         {
             messageLog.Clear();
             messageLog.TrimExcess();
         }
-      
+
     }
 }
