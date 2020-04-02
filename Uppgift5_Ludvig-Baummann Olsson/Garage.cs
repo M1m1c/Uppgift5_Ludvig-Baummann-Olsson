@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Uppgift5_Ludvig_Baummann_Olsson
 {
-    class Garage<T> : IEnumerable<T> where T : Vehicle
+    public class Garage<T> : IEnumerable<T> where T : Vehicle
     {
         private T[] vehicles;
 
@@ -45,12 +45,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             bool retFlag = false;
             if (!string.IsNullOrEmpty(input))
             {
-                var temp = vehicles[Array.FindIndex(vehicles, q => q.RegistrationNumber == input)];
+                var temp = Array.FindIndex(vehicles, q => q.RegistrationNumber == input);
 
-                if (temp != null)
+                if (temp > -1)
                 {
                     retFlag = true;
-                    temp = null;
+                    vehicles[temp] = null;
                 }
             }
             return retFlag;

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Uppgift5_Ludvig_Baummann_Olsson
 {
-    class GarageHandler
+    public class GarageHandler
     {
         private Garage<Vehicle> garage;
         public void CreateGarage(int capacity)

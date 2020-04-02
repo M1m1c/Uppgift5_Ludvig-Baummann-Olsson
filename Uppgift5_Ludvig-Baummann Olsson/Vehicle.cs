@@ -5,7 +5,7 @@ using System.Text;
 namespace Uppgift5_Ludvig_Baummann_Olsson
 {
 
-    class Vehicle
+    public class Vehicle
     {
         public Vehicle(string regN, string color, int wheels)
         {
