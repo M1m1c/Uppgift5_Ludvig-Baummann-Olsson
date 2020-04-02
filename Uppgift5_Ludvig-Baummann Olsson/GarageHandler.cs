@@ -38,9 +38,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public Vehicle FindVehicle(string input)
         {
-            var temp = from v in garage where v.RegistrationNumber == input.ToUpper() select v;
-            var g = temp.ToList();           
-            return g.Count > 0 ? g.FirstOrDefault() : null;
+            return garage.FirstOrDefault(v=> v.RegistrationNumber == input.ToUpper());
         }
 
         public string CountVehicles()

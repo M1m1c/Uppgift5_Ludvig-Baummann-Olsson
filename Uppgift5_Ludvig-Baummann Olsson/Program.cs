@@ -5,7 +5,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
     class Program
     {
         static UI ui = new UI();
-        static GarageHandler garageHandeler = new GarageHandler();
+        static GarageHandler garageHandler = new GarageHandler();
         static void Main(string[] args)
         {
             while (true)
@@ -29,7 +29,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
                 if (selection == '1') { CreateGarage(); }
 
-                if (garageHandeler.HasGarage() == true)
+                if (garageHandler.HasGarage() == true)
                 {
                     switch (selection)
                     {
@@ -69,7 +69,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 {
                     break;
                 }
-                Vehicle tempVehicle = garageHandeler.FindVehicle(input.ToUpper());
+                Vehicle tempVehicle = garageHandler.FindVehicle(input.ToUpper());
                 tempString = tempVehicle != null ? tempVehicle.ToString() : "";
                 if (!string.IsNullOrEmpty(tempString))
                 {
@@ -94,7 +94,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 {
                     break;
                 }
-                else if (garageHandeler.RemoveVehicle(input))
+                else if (garageHandler.RemoveVehicle(input))
                 {
                     ui.AddToMessageLog("Vehicle was removed successfully");
                     break;
@@ -120,7 +120,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
                 Vehicle vehicle = CreateNewVehicle(input);
 
-                if (garageHandeler.AddVehicle(vehicle))
+                if (garageHandler.AddVehicle(vehicle))
                 {
                     ui.AddToMessageLog("Vehicle added to garage successfully");
                     break;
@@ -129,6 +129,8 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         }
 
+        //TODO bryt ut allt som är gemensamt för alla vehicles i en metod, kanske lytta den till garage handeler
+        //kanske hämta ut properties dynamiskt
         static public Vehicle CreateNewVehicle(string input)
         {
             var retValue = new Vehicle("0", "0", 0);
@@ -202,7 +204,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             {
                 ui.Print("Enter a new registration number");
                 string input = ui.ReadLine();
-                if (garageHandeler.DoesRegistrationNumberExist(input) == false)
+                if (garageHandler.DoesRegistrationNumberExist(input) == false)
                 {
                     retString = input;
                     break;
@@ -222,15 +224,15 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
           "Car\n" +
           "Bus\n" +
           "Boat\n");
-            ui.AddToMessageLog(garageHandeler.GetVehicleInfos(ui.ReadLine()));
-            ui.AddToMessageLog(garageHandeler.CountVehicles());
+            ui.AddToMessageLog(garageHandler.GetVehicleInfos(ui.ReadLine()));
+            ui.AddToMessageLog(garageHandler.CountVehicles());
 
         }
 
         private static void FillGarageWithDefault()
         {
 
-            garageHandeler.FillGarage();
+            garageHandler.FillGarage();
             ui.AddToMessageLog("Added some default vehicles to the garage");
 
         }
@@ -243,7 +245,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 ui.Print("Enter a number to determine the capacity of the garage");
                 if (int.TryParse(ui.ReadLine(), out capacity) && capacity != 0)
                 {
-                    garageHandeler.CreateGarage(capacity);
+                    garageHandler.CreateGarage(capacity);
                     ui.AddToMessageLog($"A garage with a capcity for {capacity} vehicles has been created");
                     break;
                 }
