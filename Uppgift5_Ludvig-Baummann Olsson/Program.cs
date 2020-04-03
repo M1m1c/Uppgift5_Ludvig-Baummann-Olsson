@@ -79,15 +79,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 }
                 ui.Print("Could not find a vehicle with that registration number");
             }
-
         }
 
         private static void RemoveVehicle()
         {
-
             while (true)
             {
-
                 ui.Print("type the registration number of the vehicle you wish to remove. type 0 to exit.");
                 string input = ui.ReadLine();
                 char selection = input.Length > 0 && input.Length < 2 ? input[0] : ' ';
@@ -102,12 +99,10 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 }
                 ui.Print("Could not find a vehicle with that number in the garage");
             }
-
         }
 
         private static void AddVehicle()
         {
-
             while (true)
             {
                 ui.Print("Enter one of the following to create a vehicle of that type:\n" +
@@ -127,22 +122,8 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                     break;
                 }
             }
-
         }
 
-        /*static public Vehicle CreateNewVehicle(string input)
-        { 
-            input =$"Uppgift5_Ludvig_Baummann_Olsson.{input.First().ToString().ToUpper() + input.Substring(1).ToLower()}";
-          
-            var type = Type.GetType(input);
- 
-            //skulle behöva göra en override på get properties som bara returnar de properties vi bryr oss om.
-            foreach (var item in type.GetType().GetProperties())
-            {
-
-            }
-        }*/
-       
         static public Vehicle CreateNewVehicle(string input)
         {
             var retValue = new Vehicle(CreateRegistration().ToUpper(),
@@ -167,15 +148,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                     retValue = new Boat(retValue, ParseNumber<double>("Please enter how long the boat is:"));
                     break;
             }
-
             return retValue;
         }
 
 
         private static T ParseNumber<T>(string message) where T : IConvertible
-        {
-
-            
+        {        
             var thisType = default(T);
             var typeCode = thisType.GetTypeCode();
             var retNumber= default(T);
@@ -200,8 +178,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                         retNumber = (T)Convert.ChangeType(i, typeCode);
                         break;
                     }
-                }
-             
+                }           
                 ui.Print("Invalid amount, make sure to only use numbers");
             }
             return retNumber;
@@ -247,10 +224,8 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         private static void FillGarageWithDefault()
         {
-
             garageHandler.FillGarage();
             ui.AddToMessageLog("Added some default vehicles to the garage");
-
         }
 
         private static void CreateGarage()

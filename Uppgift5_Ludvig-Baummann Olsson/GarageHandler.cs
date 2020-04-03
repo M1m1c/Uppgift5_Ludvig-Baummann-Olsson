@@ -77,7 +77,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             return retString;
         }
 
-        public string BuildVehicleInfo(List<Vehicle> vehicles)
+        private string BuildVehicleInfo(List<Vehicle> vehicles)
         {
             StringBuilder retString = new StringBuilder();
 
@@ -91,7 +91,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             return retString.ToString();
         }
 
-        public List<Vehicle> TypeSorter(string input)
+        private List<Vehicle> TypeSorter(string input)
         {
             var retList = new List<Vehicle>();
             switch (input.ToLower())
