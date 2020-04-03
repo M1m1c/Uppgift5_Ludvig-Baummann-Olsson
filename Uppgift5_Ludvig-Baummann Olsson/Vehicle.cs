@@ -14,6 +14,13 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             Wheels = wheels;
         }
 
+        public Vehicle(Vehicle vehicle)
+        {
+            RegistrationNumber = vehicle.RegistrationNumber;
+            Color = vehicle.Color;
+            Wheels = vehicle.Wheels;
+        }
+
         public string RegistrationNumber { get; set; }
 
         public string Color { get; set; }
@@ -32,6 +39,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         {
             NumberOfEngines = numEngines;
         }
+
+        public Airplane(Vehicle vehicle, int numEngines) : base(vehicle)
+        {
+            NumberOfEngines = numEngines;
+        }
+
         public int NumberOfEngines { get; set; }
 
         public override string ToString()
@@ -43,6 +56,11 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
     class Motorcycle : Vehicle
     {
         public Motorcycle(string regN, string color, int wheels, int cylVolume) : base(regN, color, wheels)
+        {
+            CylinderVolume = cylVolume;
+        }
+
+        public Motorcycle(Vehicle vehicle, int cylVolume) : base(vehicle)
         {
             CylinderVolume = cylVolume;
         }
@@ -61,6 +79,12 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         {
             FuelType = fuelType;
         }
+
+        public Car(Vehicle vehicle, string fuelType) : base(vehicle)
+        {
+            FuelType = fuelType;
+        }
+
         public string FuelType { get; set; }
 
         public override string ToString()
@@ -76,6 +100,11 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             NumberOfSeats = numSeats;
         }
 
+        public Bus(Vehicle vehicle, int numSeats) : base(vehicle)
+        {
+            NumberOfSeats = numSeats;
+        }
+
         public int NumberOfSeats { get; set; }
 
         public override string ToString()
@@ -87,6 +116,11 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
     class Boat : Vehicle
     {
         public Boat(string regN, string color, int wheels, double length) : base(regN, color, wheels)
+        {
+            Length = length;
+        }
+
+        public Boat(Vehicle vehicle, double length) : base(vehicle)
         {
             Length = length;
         }

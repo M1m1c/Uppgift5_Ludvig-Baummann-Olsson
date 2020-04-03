@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Uppgift5_Ludvig_Baummann_Olsson
 {
@@ -129,66 +130,81 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         }
 
-        //TODO bryt ut allt som är gemensamt för alla vehicles i en metod, kanske lytta den till garage handeler
-        //kanske hämta ut properties dynamiskt
+        /*static public Vehicle CreateNewVehicle(string input)
+        { 
+            input =$"Uppgift5_Ludvig_Baummann_Olsson.{input.First().ToString().ToUpper() + input.Substring(1).ToLower()}";
+          
+            var type = Type.GetType(input);
+ 
+            //skulle behöva göra en override på get properties som bara returnar de properties vi bryr oss om.
+            foreach (var item in type.GetType().GetProperties())
+            {
+
+            }
+        }*/
+       
         static public Vehicle CreateNewVehicle(string input)
         {
-            var retValue = new Vehicle("0", "0", 0);
+            var retValue = new Vehicle(CreateRegistration().ToUpper(),
+                        SetString("Please enter a color:"),
+                        ParseNumber<int>("Please enter how many wheels the vehicle has:"));
+
             switch (input.ToLower())
             {
                 case "airplane":
-                    retValue = new Airplane(
-                        CreateRegistration().ToUpper(),
-                        SetString("Please enter a color:"),
-                        ParseANumber("Please enter how many wheels the vehicle has:"),
-                        ParseANumber("Please enter how many engines the plane has:"));
+                    retValue = new Airplane(retValue, ParseNumber<int>("Please enter how many engines the plane has:"));
                     break;
                 case "motorcycle":
-                    retValue = new Motorcycle(
-                       CreateRegistration().ToUpper(),
-                       SetString("Please enter a color:"),
-                       ParseANumber("Please enter how many wheels the vehicle has:"),
-                       ParseANumber("Please enter the cylidner volume of the motocycle:"));
+                    retValue = new Motorcycle(retValue, ParseNumber<int>("Please enter the cylidner volume of the motocycle:"));
                     break;
                 case "car":
-                    retValue = new Car(
-                    CreateRegistration().ToUpper(),
-                    SetString("Please enter a color:"),
-                    ParseANumber("Please enter how many wheels the vehicle has:"),
-                    SetString("Please enter what type of fuel the car uses:"));
+                    retValue = new Car(retValue, SetString("Please enter what type of fuel the car uses:"));
                     break;
                 case "bus":
-                    retValue = new Bus(
-                    CreateRegistration().ToUpper(),
-                    SetString("Please enter a color:"),
-                    ParseANumber("Please enter how many wheels the vehicle has:"),
-                    ParseANumber("Please enter how many seats the bus has:"));
+                    retValue = new Bus(retValue, ParseNumber<int>("Please enter how many seats the bus has:"));
                     break;
                 case "boat":
-                    retValue = new Bus(
-                    CreateRegistration().ToUpper(),
-                    SetString("Please enter a color:"),
-                    ParseANumber("Please enter how many wheels the vehicle has:"),
-                    ParseANumber("Please enter how long the boat is:"));
+                    retValue = new Boat(retValue, ParseNumber<double>("Please enter how long the boat is:"));
                     break;
             }
+
             return retValue;
         }
 
 
-        private static int ParseANumber(string message)
+        private static T ParseNumber<T>(string message) where T : IConvertible
         {
-            int retInt;
+
+            
+            var thisType = default(T);
+            var typeCode = thisType.GetTypeCode();
+            var retNumber= default(T);
+          
             while (true)
             {
                 string input = SetString(message);
-                if (int.TryParse(input, out retInt))
+                if (typeCode == TypeCode.Double)
                 {
-                    break;
+                    double d;
+                    if (double.TryParse(input, out d))
+                    {
+                        retNumber = (T)Convert.ChangeType(d, typeCode);
+                        break;
+                    }
                 }
+                else if (typeCode == TypeCode.Int32)
+                {
+                    int i;
+                    if (int.TryParse(input, out i))
+                    {
+                        retNumber = (T)Convert.ChangeType(i, typeCode);
+                        break;
+                    }
+                }
+             
                 ui.Print("Invalid amount, make sure to only use numbers");
             }
-            return retInt;
+            return retNumber;
         }
 
         private static string SetString(string message)
