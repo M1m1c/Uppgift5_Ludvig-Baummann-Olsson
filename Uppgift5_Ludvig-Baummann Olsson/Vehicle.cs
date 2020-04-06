@@ -9,19 +9,19 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
     {
         public Vehicle(string regN, string color, int wheels)
         {
-            RegistrationNumber = regN;
+            RegNo = regN;
             Color = color;
             Wheels = wheels;
         }
 
         public Vehicle(Vehicle vehicle)
         {
-            RegistrationNumber = vehicle.RegistrationNumber;
+            RegNo = vehicle.RegNo;
             Color = vehicle.Color;
             Wheels = vehicle.Wheels;
         }
 
-        public string RegistrationNumber { get; set; }
+        public string RegNo { get; set; }
 
         public string Color { get; set; }
 
@@ -29,7 +29,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public override string ToString()
         {
-            return ($"{this.GetType().Name}-> Lisence Plate: {RegistrationNumber}| Color: {Color}| Wheels: {Wheels}|");
+            return ($"{this.GetType().Name}-> Lisence Plate: {RegNo}| Color: {Color}| Wheels: {Wheels}|");
         }
     }
 

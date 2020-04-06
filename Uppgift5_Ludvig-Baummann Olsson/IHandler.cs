@@ -1,4 +1,6 @@
-﻿namespace Uppgift5_Ludvig_Baummann_Olsson
+﻿using System.Collections.Generic;
+
+namespace Uppgift5_Ludvig_Baummann_Olsson
 {
     public interface IHandler
     {
@@ -12,7 +14,9 @@
 
         public bool DoesRegistrationNumberExist(string input);
 
-        public Vehicle FindVehicle(string input);
+        public Vehicle FindVehicleRegNo(string input);
+
+        public List<Vehicle> FindVehicles(string property, string value);
 
         public string CountVehicles();
 

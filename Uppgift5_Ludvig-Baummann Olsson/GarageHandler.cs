@@ -20,26 +20,59 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public bool AddVehicle(Vehicle vehicle)
         {         
-           return DoesRegistrationNumberExist(vehicle.RegistrationNumber) ? false : garage.AddVehicle(vehicle);
+           return DoesRegistrationNumberExist(vehicle.RegNo) ? false : garage.AddVehicle(vehicle);
         }
 
         public bool RemoveVehicle(string input)
         {
-            var temp = FindVehicle(input);
+            var temp = FindVehicleRegNo(input);
             
-            return garage.RemoveVehicle(temp != null ? temp.RegistrationNumber : "") ;
+            return garage.RemoveVehicle(temp != null ? temp.RegNo : "") ;
         }
 
         public bool DoesRegistrationNumberExist(string input)
         {        
-            Vehicle temp = FindVehicle(input);
+            Vehicle temp = FindVehicleRegNo(input);
             return temp != null ? true : false;  
         } 
-        //TODO refaktorisera så att den kan söka på olika typer av attribut som vehicles kan ha
-        public Vehicle FindVehicle(string input)
+
+        public Vehicle FindVehicleRegNo(string input)
         {
             // var v = vehicles.Where(v => v.Color == "Red").Select(v => v.Wheels).Count()
-            return garage.FirstOrDefault(v=> v.RegistrationNumber == input.ToUpper());
+            //var b = garage.Where(v => v.GetType().GetProperty("Color").ToString()=="Blue").ToList();
+            return garage.FirstOrDefault(v=> v.RegNo == input.ToUpper());       
+        }
+
+        public List<Vehicle> FindVehicles(string property, string value)
+        {
+            var retList = new List<Vehicle>();
+            property = property.ToLower();
+            value = value.ToLower();
+            foreach (var (vehicle, item) in garage.SelectMany(vehicle => vehicle.GetType().GetProperties()
+            .Where(item => item.Name.ToLower() == property).Select(item => (vehicle, item))))
+            {
+                var type = item.PropertyType;
+                if (type.Name == "String")
+                {
+                    if ((item.GetValue(vehicle) as string).ToLower() == value)
+                    {
+                        retList.Add(vehicle);
+                    }
+                }
+                else if (type.Name == "Int32")
+                {
+                    int i;
+                    if (int.TryParse(value, out i))
+                    {
+                        if ((int)item.GetValue(vehicle) == i)
+                        {
+                            retList.Add(vehicle);
+                        }
+                    }
+                }
+            }
+
+            return retList;
         }
 
         public string CountVehicles()
@@ -99,7 +132,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             }
             else
             {
-                input = input.First().ToString().ToUpper() + input.Substring(1);
+                input = input.First().ToString().ToUpper() + input.Substring(1).ToLower();
                 retList = garage.Where(v => v.GetType().Name == input).ToList();
             }
 

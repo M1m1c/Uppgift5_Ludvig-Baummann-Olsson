@@ -21,7 +21,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                     "3. to print vehicles in garage\n" +
                     "4. to add a new vehicle to the garage\n" +
                     "5. to remove a vehicle from the garage\n" +
-                    "6. to search for a vehicle using its registration number\n");
+                    "6. to search for a vehicle using one of its property values\n");
                 ui.PrintMessageLog();
                 ui.ClearMessageLog();
                 string input = ui.ReadLine();
@@ -48,7 +48,8 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                             RemoveVehicle();
                             break;
                         case '6':
-                            SearchForVehicle();
+                            SearchBasedOnProperty();
+                            //SearchForVehicle();
                             break;
                     }
                 }
@@ -59,6 +60,49 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             }
         }
 
+        private static void SearchBasedOnProperty()
+        {
+            
+            string property;
+            string value;
+            while (true)
+            {
+                ui.Print("Please enter a property to seach for. valid search terms:\n" +
+               "RegNo\n" +
+               "Color\n" +
+               "Wheels");
+
+                property = ui.ReadLine();
+                if (property.ToLower() == "regno" ||
+                    property.ToLower() == "color" ||
+                    property.ToLower() == "wheels"
+                    )
+                {
+                    ui.Print("Enter what value you want for the property you are looking for");
+                    value = ui.ReadLine();
+                    var temp = garageHandler.FindVehicles(property, value);
+                    
+
+                    if (temp.Count>0)
+                    {
+                        foreach (var item in temp)
+                        {
+                            ui.AddToMessageLog(item + "");
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        ui.AddToMessageLog("Could not find any vehicles matching that criteria");
+                        break;
+                    }
+                }
+                ui.Print("Invalid input try again.");
+            }
+           
+          
+        }
+        /*
         private static void SearchForVehicle()
         {
             string tempString = "";
@@ -80,7 +124,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 }
                 ui.Print("Could not find a vehicle with that registration number");
             }
-        }
+        }*/
 
         private static void RemoveVehicle()
         {
@@ -114,8 +158,22 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                             "Boat\n");
 
                 string input = ui.ReadLine();
-
-                Vehicle vehicle = CreateNewVehicle(input);
+                Vehicle vehicle = new Vehicle("0","0",0);
+               
+                if (input.ToLower() == "airplane"||
+                    input.ToLower() == "motorcycle" ||
+                    input.ToLower() == "car" ||
+                    input.ToLower() == "bus" ||
+                    input.ToLower() == "boat")
+                {
+                    vehicle = CreateNewVehicle(input);
+                }
+                else
+                {
+                    ui.Print("Invalid input, try again");
+                    continue;
+                }
+               
 
                 if (garageHandler.AddVehicle(vehicle))
                 {
@@ -124,6 +182,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
                 }
             }
         }
+
 
         static public Vehicle CreateNewVehicle(string input)
         {

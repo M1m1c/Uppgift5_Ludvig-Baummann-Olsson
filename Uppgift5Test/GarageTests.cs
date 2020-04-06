@@ -40,7 +40,7 @@ namespace Uppgift5Test
             var garageHandler = new Uppgift5_Ludvig_Baummann_Olsson.GarageHandler();
             garageHandler.CreateGarage(1);
             Assert.IsTrue(garageHandler.AddVehicle(new Uppgift5_Ludvig_Baummann_Olsson.Vehicle("ABC123", "Red", 4)));
-            Assert.IsNotNull(garageHandler.FindVehicle("ABC123"));
+            Assert.IsNotNull(garageHandler.FindVehicleRegNo("ABC123"));
         }
 
         [TestMethod]
@@ -58,10 +58,10 @@ namespace Uppgift5Test
             var garageHandler = new Uppgift5_Ludvig_Baummann_Olsson.GarageHandler();
             garageHandler.CreateGarage(4);
             garageHandler.FillGarage();
-            Assert.IsNotNull(garageHandler.FindVehicle("ABC123"));
-            Assert.IsNotNull(garageHandler.FindVehicle("DEF456"));
-            Assert.IsNotNull(garageHandler.FindVehicle("GHJ789"));
-            Assert.IsNotNull(garageHandler.FindVehicle("KLM321"));
+            Assert.IsNotNull(garageHandler.FindVehicleRegNo("ABC123"));
+            Assert.IsNotNull(garageHandler.FindVehicleRegNo("DEF456"));
+            Assert.IsNotNull(garageHandler.FindVehicleRegNo("GHJ789"));
+            Assert.IsNotNull(garageHandler.FindVehicleRegNo("KLM321"));
         }
 
         [TestMethod]

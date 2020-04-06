@@ -45,7 +45,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             bool retFlag = false;
             if (!string.IsNullOrEmpty(input))
             {
-                var temp = Array.FindIndex(vehicles, q => q.RegistrationNumber == input);
+                var temp = Array.FindIndex(vehicles, q => q.RegNo == input);
 
                 if (temp > -1)
                 {
