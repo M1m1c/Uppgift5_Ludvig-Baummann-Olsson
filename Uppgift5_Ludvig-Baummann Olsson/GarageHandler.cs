@@ -38,26 +38,26 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         //TODO refaktorisera så att den kan söka på olika typer av attribut som vehicles kan ha
         public Vehicle FindVehicle(string input)
         {
+            // var v = vehicles.Where(v => v.Color == "Red").Select(v => v.Wheels).Count()
             return garage.FirstOrDefault(v=> v.RegistrationNumber == input.ToUpper());
         }
 
         public string CountVehicles()
         {
-            VehicleCount[] vehicleCounts = new VehicleCount[] {
-                new VehicleCount("All",0),
-                new VehicleCount("Airplane",0),
-                new VehicleCount("Motorcycle",0),
-                new VehicleCount("Car",0),
-                new VehicleCount("Bus",0),
-                new VehicleCount("Boat",0)};
-
             StringBuilder retString = new StringBuilder();
             retString.Append("Vehicle Counts-> ");
-            foreach (var item in vehicleCounts)
+
+            var vehicleGroups = garage.GroupBy(v => v.GetType().Name).Select(v => new 
             {
-                item.Amount = TypeSorter(item.TypeName).Count;
-                retString.Append($"{item.TypeName}: {item.Amount}| ");
+                TypeName = v.Key,
+                Count = v.Count()
+            });
+
+            foreach (var item in vehicleGroups)
+            {
+                retString.Append($"{item.TypeName}: {item.Count}| ");
             }
+
             return retString.ToString();
         }
        
@@ -80,41 +80,29 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
         private string BuildVehicleInfo(List<Vehicle> vehicles)
         {
             StringBuilder retString = new StringBuilder();
-
-            foreach (var item in from item in vehicles
-                                 where item != null
-                                 select item)
+        
+            foreach (var item in vehicles)
             {
                 retString.Append(item + "\n");
             }
-
+         
             return retString.ToString();
         }
 
         private List<Vehicle> TypeSorter(string input)
         {
             var retList = new List<Vehicle>();
-            switch (input.ToLower())
+
+            if (input.ToLower() == "all") 
             {
-                case "airplane":
-                    retList = garage.Where( v => v is Airplane).ToList();
-                    break;
-                case "motorcycle":
-                    retList = garage.Where(v => v is Motorcycle).ToList();
-                    break;
-                case "car":
-                    retList = garage.Where(v => v is Car).ToList();
-                    break;
-                case "bus":
-                    retList = garage.Where(v => v is Bus).ToList();
-                    break;
-                case "boat":
-                    retList = garage.Where(v => v is Boat).ToList();
-                    break;
-                case "all":
-                    retList = garage.Where( v => v is Vehicle).ToList();
-                    break;
+                retList = garage.ToList();
             }
+            else
+            {
+                input = input.First().ToString().ToUpper() + input.Substring(1);
+                retList = garage.Where(v => v.GetType().Name == input).ToList();
+            }
+
             return retList;
         }
      

@@ -6,7 +6,8 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
     class Program
     {
         static UI ui = new UI();
-        static GarageHandler garageHandler = new GarageHandler();
+        //TODO byt till IHandler
+        static IHandler garageHandler = new GarageHandler();
         static void Main(string[] args)
         {
             while (true)

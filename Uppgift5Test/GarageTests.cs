@@ -70,7 +70,7 @@ namespace Uppgift5Test
             var garageHandler = new Uppgift5_Ludvig_Baummann_Olsson.GarageHandler();
             garageHandler.CreateGarage(4);
             garageHandler.FillGarage();
-            Assert.AreEqual(garageHandler.CountVehicles(),"Vehicle Counts-> All: 4| Airplane: 1| Motorcycle: 0| Car: 1| Bus: 1| Boat: 1| ");
+            Assert.AreEqual(garageHandler.CountVehicles(), "Vehicle Counts-> Car: 1| Airplane: 1| Boat: 1| Bus: 1| ");
         }
 
         [TestMethod]
