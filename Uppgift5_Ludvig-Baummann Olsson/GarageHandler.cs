@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Uppgift5_Ludvig_Baummann_Olsson
 {
-    public class GarageHandler
+    public class GarageHandler : IHandler
     {
         private Garage<Vehicle> garage;
         public void CreateGarage(int capacity)
@@ -20,7 +20,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
 
         public bool AddVehicle(Vehicle vehicle)
         {         
-            return DoesRegistrationNumberExist(vehicle.RegistrationNumber) ? false : garage.AddVehicle(vehicle);
+           return DoesRegistrationNumberExist(vehicle.RegistrationNumber) ? false : garage.AddVehicle(vehicle);
         }
 
         public bool RemoveVehicle(string input)
@@ -35,7 +35,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             Vehicle temp = FindVehicle(input);
             return temp != null ? true : false;  
         } 
-
+        //TODO refaktorisera så att den kan söka på olika typer av attribut som vehicles kan ha
         public Vehicle FindVehicle(string input)
         {
             return garage.FirstOrDefault(v=> v.RegistrationNumber == input.ToUpper());
