@@ -44,6 +44,17 @@ namespace Uppgift5Test
         }
 
         [TestMethod]
+        public void FindVehiclesTest()
+        {
+            var garageHandler = new Uppgift5_Ludvig_Baummann_Olsson.GarageHandler();
+            garageHandler.CreateGarage(2);
+            Assert.IsTrue(garageHandler.AddVehicle(new Uppgift5_Ludvig_Baummann_Olsson.Vehicle("ABC123", "Red", 4)));
+            Assert.IsTrue(garageHandler.AddVehicle(new Uppgift5_Ludvig_Baummann_Olsson.Vehicle("DEF777", "Red", 4)));
+            Assert.IsTrue(garageHandler.FindVehicles("color", "red").Count == 2);
+            
+        }
+
+        [TestMethod]
         public void DoesRegistrationNumberExistTest()
         {
             var garageHandler = new Uppgift5_Ludvig_Baummann_Olsson.GarageHandler();

@@ -35,7 +35,7 @@ namespace Uppgift5_Ludvig_Baummann_Olsson
             Vehicle temp = FindVehicleRegNo(input);
             return temp != null ? true : false;  
         } 
-
+      
         public Vehicle FindVehicleRegNo(string input)
         {
             // var v = vehicles.Where(v => v.Color == "Red").Select(v => v.Wheels).Count()
